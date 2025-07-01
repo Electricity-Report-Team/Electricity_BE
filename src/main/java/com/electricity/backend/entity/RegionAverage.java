@@ -20,7 +20,7 @@ public class RegionAverage {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "avgId")
-  private Long avgId; // 지역 평균 아이디
+  private Long avgId;
 
   @ManyToOne
   @JoinColumn(name = "regionId")

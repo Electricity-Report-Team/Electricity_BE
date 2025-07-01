@@ -15,4 +15,5 @@ public class Region {
   private Long regionId;
 
   private String regionName;
+
 }

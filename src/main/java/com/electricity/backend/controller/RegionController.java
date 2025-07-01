@@ -17,7 +17,6 @@ public class RegionController {
   public RegionController(RegionService regionService) {
     this.regionService = regionService;
   }
-
   //top5 전력 소비량 조회 API
   @GetMapping("/{regionId}/top5")
   public Top5IndustryResponseDto getTop5Industry(@PathVariable long regionId) {

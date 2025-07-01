@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Top5IndustryResponseDto {
-
   private Long regionId;
   private String regionName;
   private List<String> top5Industries;
