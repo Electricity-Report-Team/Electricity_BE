@@ -1,5 +1,6 @@
 package com.electricity.backend.controller;
 
+import com.electricity.backend.dto.MonthlyChargeStatesDto;
 import com.electricity.backend.dto.MonthlyConsumptionResponseDto;
 import com.electricity.backend.service.MonthlyEnergyStatesService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,11 @@ public class MonthlyEnergyStatesController {
   @GetMapping("/{regionId}/monthly-consumption")
   public MonthlyConsumptionResponseDto getMonthlyEnergyStates(@PathVariable Long regionId, @RequestParam int year, @RequestParam int month) {
     return monthlyEnergyStatesService.getMonthlyEnergyStates(regionId, year, month);
+  }
+
+  @GetMapping("/{regionId}/monthly-charge")
+  public MonthlyChargeStatesDto getMonthlyChargeStates(@PathVariable Long regionId, @RequestParam int year, @RequestParam int month){
+    return monthlyEnergyStatesService.getMonthlyChargeStates(regionId, year, month);
   }
 
 

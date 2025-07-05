@@ -1,6 +1,8 @@
 package com.electricity.backend.service;
 
+import com.electricity.backend.dto.IndustryChargeDto;
 import com.electricity.backend.dto.IndustryPowerDto;
+import com.electricity.backend.dto.MonthlyChargeStatesDto;
 import com.electricity.backend.dto.MonthlyConsumptionResponseDto;
 import com.electricity.backend.entity.MonthlyEnergyStates;
 import com.electricity.backend.repository.MonthlyEnergyStatesRepository;
@@ -29,6 +31,18 @@ public class MonthlyEnergyStatesService {
             states.getPower())).collect(Collectors.toList());
 
     return new MonthlyConsumptionResponseDto(regionName, industryPowerDtos);
+  }
+  // 지역별(년,월에 해당하는) 전기세 추출
+  public MonthlyChargeStatesDto getMonthlyChargeStates(Long regionId, int year, int month){
+    List<MonthlyEnergyStates> response = monthlyEnergyStates.findByRegion_RegionIdAndYearAndMonthOrderByIndustry_IndustryName(regionId, year, month);
+    String regionName = response.get(0).getRegion().getRegionName();
+    List<IndustryChargeDto> industryChargeDtos = response
+        .stream().map(states -> new IndustryChargeDto(
+        states.getIndustry().getIndustryName(),
+        states.getCharge()
+    )).collect(Collectors.toList());
+
+    return new MonthlyChargeStatesDto(regionName,industryChargeDtos);
   }
 
 
