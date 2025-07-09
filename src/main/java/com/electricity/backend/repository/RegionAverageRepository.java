@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RegionAverageRepository extends JpaRepository<RegionAverage,Long> {
   List<RegionAverage> findTop5ByRegion_RegionIdOrderByLocalAvgDesc(Long regionId);
+  List<RegionAverage> findByRegion_RegionId(Long regionId);
 }

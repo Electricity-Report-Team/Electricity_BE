@@ -1,38 +1,24 @@
 package com.electricity.backend.service;
 
-import com.electricity.backend.dto.Top5IndustryResponseDto;
-import com.electricity.backend.entity.RegionAverage;
-import com.electricity.backend.repository.RegionAverageRepository;
+import com.electricity.backend.dto.RegionDto;
+import com.electricity.backend.repository.RegionRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegionService {
-  private final RegionAverageRepository regionAverageRepository;
 
-  public RegionService(RegionAverageRepository regionAverageRepository) {
-    this.regionAverageRepository = regionAverageRepository;
+  private final RegionRepository regionRepository;
+
+  public RegionService(RegionRepository regionRepository){
+    this.regionRepository = regionRepository;
   }
 
-  // Top5 전력사용량 산업 추출
-  public Top5IndustryResponseDto getTop5Industries(Long regionId){
-    // top5 산업
-    List<RegionAverage> top5 = regionAverageRepository
-        .findTop5ByRegion_RegionIdOrderByLocalAvgDesc(regionId)
-        .stream()
-        .limit(5)
+  public List<RegionDto> getAllRegions(){
+    return regionRepository.findAll().stream()
+        .map(region -> new RegionDto(region.getRegionId(),region.getRegionName()))
         .collect(Collectors.toList());
-
-    // 지역명
-    String regionName = top5.get(0).getRegion().getRegionName();
-
-    // 산업명 리스트
-    List<String> industryNames = top5.stream()
-        .map(ra -> ra.getIndustry().getIndustryName())
-        .collect(Collectors.toList());
-
-    return new Top5IndustryResponseDto(regionId,regionName,industryNames);
   }
 
 }
